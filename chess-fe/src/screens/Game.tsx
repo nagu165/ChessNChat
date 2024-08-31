@@ -32,6 +32,7 @@ export const Game = () => {
                     const move = message.payload;
                     chess.move(move);
                     setBoard(chess.board());
+                    setChess(chess);
                     console.log("Move made");
                     break;
                 case GAME_OVER:
