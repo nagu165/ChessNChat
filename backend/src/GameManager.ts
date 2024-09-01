@@ -20,7 +20,6 @@ export class GameManager {
 
     removeUser(socket: WebSocket) {
         this.users = this.users.filter(user => user !== socket);
-        // Optionally, stop the game here if necessary
     }
 
     private addHandler(socket: WebSocket) {
@@ -45,17 +44,16 @@ export class GameManager {
             }
 
             if (message.type === CHAT) {
-                // Broadcast chat message to all users in the game
                 const game = this.games.find(game => game.player1 === socket || game.player2 === socket);
                 if (game) {
                     const chatMessage = {
                         type: CHAT,
                         payload: {
-                            user: socket, // You might want to send user info instead
+                            user: socket,
                             message: message.payload.message,
                         },
                     };
-                    game.broadcastMessage(chatMessage);
+                    game.broadcastMessage(socket, chatMessage);
                 }
             }
         });

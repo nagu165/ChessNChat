@@ -74,9 +74,17 @@ export class Game {
         this.moveCount++;
     }
 
-    broadcastMessage(chatMessage: { type: string; payload: { user: WebSocket; message: string; } }) {
-        const messageData = JSON.stringify(chatMessage);
+    broadcastMessage(socket: WebSocket, chatMessage: { type: string; payload: { message: string; } }) {
+        const sender = socket === this.player1 ? "white" : "black";
+        const messageData = JSON.stringify({
+            type: CHAT,
+            payload: {
+                sender: sender,
+                message: chatMessage.payload.message
+            }
+        });
         this.player1.send(messageData);
         this.player2.send(messageData);
     }
+
 }

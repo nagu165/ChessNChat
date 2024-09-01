@@ -1,28 +1,38 @@
-import { useNavigate } from "react-router-dom"
-import { Button } from "../components/Button";
 
+import { useNavigate } from 'react-router-dom';
+import { Header } from '../components/Header';
+import { Footer } from '../components/Footer';
 
 export const Landing = () => {
-    const navigate = useNavigate();
-    return <div className="flex justify-center">
-        <div className="pt-8 max-w-screen-md">
-            <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-                <div className="flex justify-center">
-                    <img src={"/chessboard.jpeg"} alt="Image of a nice chess-board" className="max-w-96"/>
-                </div>
-                <div className="pt-16">
-                    <div className="flex justify-center">
-                        <h1 className="text-4xl font-bold text-white">Play chess online on the #4 site!</h1>
-                    </div>
-                    <div className="mt-4 flex justify-center">
-                        <Button onClick={() => {
-                            navigate("/game")
-                        }}>
-                            Play Game
-                        </Button>
-                    </div>
-                </div>
+  const navigate = useNavigate();
+
+  return (
+    <div className="flex flex-col min-h-screen bg-slate-800">
+      <Header />
+      <main className="flex-grow container mx-auto px-4 py-8">
+        <div className="max-w-6xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+            <div className="order-2 md:order-1">
+              <h1 className="text-4xl md:text-5xl font-bold text-stone-50 mb-4">Play Chess Online with Friends</h1>
+              <p className="text-lg text-stone-300 mb-6">Challenge your friends, improve your skills, and have fun with our easy-to-use online chess platform.</p>
+              <button 
+                onClick={() => navigate('/game')}
+                className="bg-green-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg text-lg transition duration-300"
+              >
+                Start Playing Now
+              </button>
             </div>
+            <div className="order-1 md:order-2">
+              <img 
+                src="/chessboard.jpeg" 
+                alt="Chess board" 
+                className="rounded-lg shadow-xl max-w-full h-auto"
+              />
+            </div>
+          </div>
         </div>
+      </main>
+      <Footer />
     </div>
-}
+  );
+};
