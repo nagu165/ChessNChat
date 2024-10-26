@@ -1,7 +1,16 @@
+import { ButtonHTMLAttributes } from 'react';
 
-
-export const Button = ({ onClick, children }: {onClick: () => void, children: React.ReactNode }) => {
-    return <button onClick={onClick} className="px-8 py-4 text-2xl bg-purple-500 hover:bg-purple-700 text-white font-bold rounded">
-        {children}
-    </button>
+interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+  className?: string;
 }
+
+export const Button = ({ children, className = "", ...props }: ButtonProps) => {
+  return (
+    <button
+      className={`px-8 py-4 bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-xl font-bold text-lg transform hover:scale-105 transition-all duration-300 hover:shadow-lg hover:shadow-purple-500/25 ${className}`}
+      {...props}
+    >
+      {children}
+    </button>
+  );
+};

@@ -1,7 +1,12 @@
 import React, { useEffect, useState } from 'react';
 
-export const ChessChat = ({ socket }: any) => {
-    const [messages, setMessages] = useState<string[]>([]);
+interface ChatMessage {
+    sender: string;
+    message: string;
+}
+
+export const ChessChat = ({ socket }: { socket: WebSocket }) => {
+    const [messages, setMessages] = useState<ChatMessage[]>([]);
     const [inputMessage, setInputMessage] = useState<string>('');
 
     useEffect(() => {
@@ -9,12 +14,11 @@ export const ChessChat = ({ socket }: any) => {
 
         const handleMessage = (event: MessageEvent) => {
             const data = JSON.parse(event.data);
-            switch (data.type) {
-                case 'chat':
-                    setMessages((prevMessages) => [...prevMessages, data.payload.message]);
-                    break;
-                default:
-                    console.error('Unknown message type:', data.type);
+            if (data.type === 'chat') {
+                setMessages((prevMessages) => [
+                    ...prevMessages,
+                    { sender: data.payload.sender, message: data.payload.message }
+                ]);
             }
         };
 
@@ -27,7 +31,7 @@ export const ChessChat = ({ socket }: any) => {
 
     const sendMessage = (e: React.FormEvent) => {
         e.preventDefault();
-        if (inputMessage.trim() === '') return; // Prevent sending empty messages
+        if (inputMessage.trim() === '') return;
 
         const chatMessage = {
             type: 'chat',
@@ -36,20 +40,20 @@ export const ChessChat = ({ socket }: any) => {
             },
         };
         socket.send(JSON.stringify(chatMessage));
-        setInputMessage(''); // Clear the input field after sending
+        setInputMessage('');
     };
 
     return (
         <div className="bg-slate-800 p-4 rounded-md mb-4">
-            <h2 className="text-lg font-bold mb-2">Chat</h2>
-            <ul className="h-40 overflow-y-auto">
+            <h2 className="text-lg font-bold mb-2 text-white">Chat</h2>
+            <ul className="h-40 overflow-y-auto mb-2">
                 {messages.map((msg, index) => (
                     <li key={index} className="mb-1 text-white">
-                        {msg}
+                        <strong>{msg.sender}:</strong> {msg.message}
                     </li>
                 ))}
             </ul>
-            <form onSubmit={sendMessage} className="flex mt-2">
+            <form onSubmit={sendMessage} className="flex">
                 <input
                     value={inputMessage}
                     onChange={(e) => setInputMessage(e.target.value)}

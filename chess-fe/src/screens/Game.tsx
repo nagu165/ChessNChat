@@ -3,7 +3,7 @@ import { Button } from "../components/Button";
 import { ChessBoard } from "../components/ChessBoard";
 import { useSocket } from "../hooks/useSocket";
 import { Chess } from "chess.js";
-import { ChessChat } from "../components/ChessChat"; // Import ChessChat
+import { ChessChat } from "../components/ChessChat";
 
 export const INIT_GAME = "init_game";
 export const MOVE = "move";

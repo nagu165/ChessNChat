@@ -18,7 +18,7 @@ export const ChessBoard = ({ chess, board, socket, setBoard}:{
 }) => {
     const [from, setFrom] = useState<null | Square>(null);
     
-    return <div className="text-white-200 ">
+    return (<div className="text-white-200 ">
         {board.map((row, i) => {
             return <div key={i} className="flex">
                 {row.map((square, j) => {
@@ -54,4 +54,4 @@ export const ChessBoard = ({ chess, board, socket, setBoard}:{
             </div>
         })}
     </div>
-}
+)}
