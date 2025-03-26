@@ -1,3 +1,8 @@
+Video demonstration of the project :
+https://github.com/user-attachments/assets/4d9c5eb4-426b-42bd-95fd-f4dfd54d104a
+
+
+
 To run the game locally :
 1) git clone into this repository.
 2) run 'npm install' in both the backend and chess-fe directory.
